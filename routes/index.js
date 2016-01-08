@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
   function initDataSource (opts) {
     var obj = {
       dateField: opts.dateField,
-      maxCacheAgeInHours: (opts.maxCache || .001),
+      maxCacheAgeInHours: (opts.maxCache || 4),
       urlLocal: 'public/data/' + opts.filename + '.json',
       urlRemote: 'nba/' + opts.filename + '.json',
     };
