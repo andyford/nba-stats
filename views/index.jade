@@ -1,0 +1,255 @@
+extends layout
+
+block content
+
+  table
+    thead
+      tr
+        th
+          | &nbsp;
+        th(title='win percentage')
+          | w%
+        th(title='wins-losses')
+          | W-L
+        th(title='games back')
+          | GB
+        th(title='streak')
+          | str
+        th(title='last 5')
+          | L5
+        th(title='last 10')
+          | L10
+        th(title='conference record')
+          | conf
+        th(title='home record')
+          | home
+        th(title='road record')
+          | away
+        th.txt-rt(title='point differential')
+          | +/-
+        th.txt-rt(title='possessions per game [(FG attempts + turnovers - offensive rebounds) + (free throw attempts * 0.44)]')
+          | pos/g
+        //- th.txt-rt
+        //-   | opos/g
+        th.txt-rt(title='points per game')
+          | p/g
+        th.txt-rt(title='offensive efficiency [points per 100 posessions]')
+          | o eff
+        th.txt-rt(title='defensive efficiency [points allowed per 100 opponent posessions]')
+          | d eff
+        th.txt-rt(title='field goal attempts per game')
+          | fga/g
+        th.txt-rt(title='field goal attempts per 100 possessions')
+          | fga%
+        th.txt-rt(title='field goal makes per game')
+          | fgm/g
+        th.txt-rt(title='field goal percentage')
+          | fg%
+        th.txt-rt(title='effective field goal percentage [(FG made + (0.5 * 3pt FG made)) / FG attempts]')
+          | efg%
+        th.txt-rt(title='true shooting percentage [points / (2 * (FG attempts + (free throws attempted * 0.44)))]')
+          | ts%
+        th.txt-rt(title='three point FG attempts per game')
+          | 3a/g
+        th.txt-rt(title='three point FG makes per game')
+          | 3m/g
+        th.txt-rt(title='three point FG percentage')
+          | 3p%
+        th.txt-rt(title='two point FG percentage')
+          | 2p%
+
+        //- th.txt-rt(title='free throw attempts per game')
+        //-   | fta/g
+        th.txt-rt(title='free throw attempts per 100 possessions')
+          | fta%
+        th.txt-rt(title='free throws made per 100 possessions')
+          | ftm%
+        //- th.txt-rt(title='free throw makes per game')
+        //-   | ftm/g
+        th.txt-rt(title='free throw percentage')
+          | ft%
+
+        //- th.txt-rt(title='assists per game')
+        //-   | a/g
+        th.txt-rt(title='assists per field goal [assists / field goals made]')
+          | a/fg
+        th.txt-rt(title='assists per 100 possessions')
+          | a%
+        th.txt-rt(title='assist to turnover ratio [assists / turnovers]')
+          | a:t
+        //- th.txt-rt(title='turnovers per game')
+        //-   | to/g
+        th.txt-rt(title='turnovers per 100 posessions')
+          | to%
+
+        th.txt-rt(title='rebounds per game')
+          | r/g
+        th.txt-rt(title='rebounding percentage [rebounds / (rebounds + opponent rebounds)]')
+          | r%
+        th.txt-rt(title='offensive rebounds per game')
+          | or/g
+        th.txt-rt(title='offensive rebounding percentage [offensive rebounds / (offensive rebounds + opponent defensive rebounds)]')
+          | or%
+        th.txt-rt(title='defensive rebounds per game')
+          | dr/g
+        th.txt-rt(title='defensive rebounding percentage [defensive rebounds / (defensive rebounds + opponent offensive rebounds)]')
+          | dr%
+
+        //- th.txt-rt(title='blocked shots per game')
+        //-   | bk/g
+        th.txt-rt(title='blocked shots per 100 opponent possessions')
+          | bk%
+
+        //- th.txt-rt(title='steals per game')
+        //-   | s/g
+        th.txt-rt(title='steals per 100 opponent possessions')
+          | s%
+
+        th.txt-rt(title='personal fouls per game')
+          | pf/g
+        th.txt-rt(title='personal fouls per 100 opponent possessions')
+          | pf%
+
+        th.txt-rt(title='opponent personal fouls per game')
+          | opf/g
+        th.txt-rt(title='opponent personal fouls per 100 possessions')
+          | opf%
+
+        th.txt-rt(title='opponent field goal percentage')
+          | ofg%
+        th.txt-rt(title='opponent field goal attempts per 100 possessions')
+          | ofga%
+        //- th.txt-rt(title='opponent turnovers per game')
+        //-   | oto/g
+        th.txt-rt(title='opponent turnovers per 100 posessions')
+          | oto%
+
+    each it in stats.standing
+      tr(class="#{it.conference.charAt(0).toLowerCase()}c #{it.first_west ? 'wc--1' : ''}")
+        th(style={background: 'rgb(' + it.colors.win_percentage + ')'})
+          | #{it.last_name}
+        td.txt-rt(style={background: 'rgb(' + it.colors.win_percentage + ')'})
+          | #{it.win_percentage}
+        td(style={background: 'rgb(' + it.colors.win_percentage + ')'})
+          | #{it.won}-#{it.lost}
+        td(style={background: 'rgb(' + it.colors.win_percentage + ')'})
+          | #{it.games_back}
+        td(style={background: 'rgb(' + it.colors.streak_total + ')'})
+          | #{it.streak}
+        td(style={background: 'rgb(' + it.colors.last_five + ')'})
+          | #{it.last_five}
+        td(style={background: 'rgb(' + it.colors.last_ten + ')'})
+          | #{it.last_ten}
+        td(style={background: 'rgb(' + it.colors.conf_win_percentage + ')'})
+          | #{it.conference_won}-#{it.conference_lost}
+        td(style={background: 'rgb(' + it.colors.home_win_percentage + ')'})
+          | #{it.home_won}-#{it.home_lost}
+        td(style={background: 'rgb(' + it.colors.away_win_percentage + ')'})
+          | #{it.away_won}-#{it.away_lost}
+        td.txt-rt(style={background: 'rgb(' + it.colors.point_diff + ')'})
+          | #{it.point_differential_per_game}
+
+        td.txt-rt(style={background: 'rgb(' + it.colors.possessions_per_game + ')'})
+          | #{it.team_stats.possessions_per_game.toFixed(1)}
+        //- td.txt-rt(style={background: 'rgb(' + it.colors.opp.possessions_per_game + ')'})
+        //-   | #{it.opponent_stats.possessions_per_game.toFixed(1)}
+
+        //- td.txt-rt
+        //-   | #{(it.team_stats.possessions_per_game - it.opponent_stats.possessions_per_game).toFixed(3)}
+
+        td.txt-rt(style={background: 'rgb(' + it.colors.points_per_game + ')'})
+          | #{it.team_stats.points_per_game_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.points_per_pos + ')'})
+          | #{(it.team_stats.points_per_pos * 100).toFixed(1)}
+        td.txt-rt(style={background: 'rgb(' + it.colors.opp.points_per_pos + ')'})
+          | #{(it.opponent_stats.points_per_pos * 100).toFixed(1)}
+
+        td.txt-rt(style={background: 'rgb(' + it.colors.fga_per_game + ')'})
+          | #{it.team_stats.field_goals_attempted_per_game_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.fga_per_pos + ')'})
+          | #{(it.team_stats.field_goals_attempted_per_pos * 100).toFixed(1)}
+        td.txt-rt(style={background: 'rgb(' + it.colors.fgm_per_game + ')'})
+          | #{it.team_stats.field_goals_made_per_game_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.fg_pct + ')'})
+          | #{it.team_stats.field_goal_percentage_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.efg_pct + ')'})
+          | #{(it.team_stats.effective_field_goal_percentage * 100).toFixed(1)}
+        td.txt-rt(style={background: 'rgb(' + it.colors.ts_pct + ')'})
+          | #{(it.team_stats.true_shooting_percentage * 100).toFixed(1)}
+
+        td.txt-rt(style={background: 'rgb(' + it.colors.fg3a_per_game + ')'})
+          | #{it.team_stats.three_point_field_goals_attempted_per_game_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.fg3m_per_game + ')'})
+          | #{it.team_stats.three_point_field_goals_made_per_game_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.fg3_pct + ')'})
+          | #{it.team_stats.three_point_field_goal_percentage_string}
+
+        td.txt-rt(style={background: 'rgb(' + it.colors.fg2_pct + ')'})
+          | #{(it.team_stats.two_point_field_goal_percentage * 100).toFixed(1)}
+
+        //- td.txt-rt(style={background: 'rgb(' + it.colors.fta_per_game + ')'})
+        //-   | #{it.team_stats.free_throws_attempted_per_game_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.fta_per_pos + ')'})
+          | #{(it.team_stats.free_throws_attempted_per_pos * 100).toFixed(1)}
+        td.txt-rt(style={background: 'rgb(' + it.colors.ftm_per_pos + ')'})
+          | #{(it.team_stats.free_throws_made_per_pos * 100).toFixed(1)}
+        //- td.txt-rt(style={background: 'rgb(' + it.colors.ftm_per_game + ')'})
+        //-   | #{it.team_stats.free_throws_made_per_game_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.ft_pct + ')'})
+          | #{it.team_stats.free_throw_percentage_string}
+
+        //- td.txt-rt(style={background: 'rgb(' + it.colors.assists_per_game + ')'})
+        //-   | #{it.team_stats.assists_per_game_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.assists_per_fg + ')'})
+          | #{it.team_stats.assists_per_fg.toFixed(3)}
+        td.txt-rt(style={background: 'rgb(' + it.colors.assists_per_pos + ')'})
+          | #{(it.team_stats.assists_per_pos * 100).toFixed(1)}
+        td.txt-rt(style={background: 'rgb(' + it.colors.assist_to_turnover_ratio + ')'})
+          | #{it.team_stats.assist_to_turnover_ratio.toFixed(2)}
+        //- td.txt-rt(style={background: 'rgb(' + it.colors.turnovers_per_game + ')'})
+        //-   | #{it.team_stats.turnovers_per_game_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.turnovers_per_pos + ')'})
+          | #{(it.team_stats.turnovers_per_pos * 100).toFixed(1)}
+
+        td.txt-rt(style={background: 'rgb(' + it.colors.rebounds_per_game + ')'})
+          | #{it.team_stats.rebounds_per_game_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.rebound_percentage + ')'})
+          | #{(it.team_stats.rebound_percentage * 100).toFixed(1)}
+        td.txt-rt(style={background: 'rgb(' + it.colors.offensive_rebounds_per_game + ')'})
+          | #{it.team_stats.offensive_rebounds_per_game_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.offensive_rebound_percentage + ')'})
+          | #{(it.team_stats.offensive_rebound_percentage * 100).toFixed(1)}
+        td.txt-rt(style={background: 'rgb(' + it.colors.defensive_rebounds_per_game + ')'})
+          | #{it.team_stats.defensive_rebounds_per_game_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.defensive_rebound_percentage + ')'})
+          | #{(it.team_stats.defensive_rebound_percentage * 100).toFixed(1)}
+
+        //- td.txt-rt(style={background: 'rgb(' + it.colors.blocks_per_game + ')'})
+        //-   | #{it.team_stats.blocks_per_game_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.blocks_per_opp_possession + ')'})
+          | #{(it.team_stats.blocks_per_opp_possession * 100).toFixed(1)}
+
+        //- td.txt-rt(style={background: 'rgb(' + it.colors.steals_per_game + ')'})
+        //-   | #{it.team_stats.steals_per_game_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.steals_per_opp_possession + ')'})
+          | #{(it.team_stats.steals_per_opp_possession * 100).toFixed(1)}
+
+        td.txt-rt(style={background: 'rgb(' + it.colors.personal_fouls_per_game + ')'})
+          | #{it.team_stats.personal_fouls_per_game_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.personal_foul_percentage + ')'})
+          | #{(it.team_stats.personal_foul_percentage * 100).toFixed(1)}
+
+        td.txt-rt(style={background: 'rgb(' + it.colors.opp.personal_fouls_per_game + ')'})
+          | #{it.opponent_stats.personal_fouls_per_game_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.opp.personal_foul_percentage + ')'})
+          | #{(it.opponent_stats.personal_foul_percentage * 100).toFixed(1)}
+
+        td.txt-rt(style={background: 'rgb(' + it.colors.opp.fg_pct + ')'})
+          | #{it.opponent_stats.field_goal_percentage_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.opp.fg_pp + ')'})
+          | #{(it.opponent_stats.field_goals_attempted_per_pos * 100).toFixed(1)}
+
+        //- td.txt-rt(style={background: 'rgb(' + it.colors.opp.turnovers_per_game + ')'})
+        //-   | #{it.opponent_stats.turnovers_per_game_string}
+        td.txt-rt(style={background: 'rgb(' + it.colors.opp.turnovers_per_pos + ')'})
+          | #{(it.opponent_stats.turnovers_per_pos * 100).toFixed(1)}
